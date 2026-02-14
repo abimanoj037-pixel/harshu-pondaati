@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For Harshu ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffdde1);
+      background-size: 400% 400%;
+      animation: gradientMove 8s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #ff1e56;
+      text-align: center;
+      min-height: 50px;
+    }
+
+    button {
+      padding: 14px 25px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 15px;
+      transition: 0.3s;
+    }
+
+    #yes {
+      background: #ff1e56;
+      color: white;
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+    }
+
+    #no {
+      background: #333;
+      color: white;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-600px); opacity: 0; }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      animation: fall 3s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity:1;}
+      100% { transform: translateY(600px) rotate(360deg); opacity:0;}
+    }
+
+    .message {
+      font-size: 20px;
+      color: #ff1e56;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1 id="title"></h1>
+
+<button id="yes">YES, Harshu ❤️</button>
+<button id="no">NO</button>
+
+<div id="messages"></div>
+
+<!-- IMPORTANT: Matches your exact file name -->
+<audio id="bgMusic" src="raataan lambiyan.mp3.mp3" loop></audio>
+
+<script>
+
+  const titleText = "Do You Love Me, Harshu? 💖";
+  const title = document.getElementById("title");
+  let i = 0;
+
+  function typeEffect() {
+    if (i < titleText.length) {
+      title.innerHTML += titleText.charAt(i);
+      i++;
+      setTimeout(typeEffect, 80);
+    }
+  }
+  typeEffect();
+
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const messagesDiv = document.getElementById("messages");
+  const bgMusic = document.getElementById("bgMusic");
+
+  function moveNo() {
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+
+    const x = Math.random() * (window.innerWidth - btnWidth);
+    const y = Math.random() * (window.innerHeight - btnHeight);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  noBtn.addEventListener("mouseover", moveNo);
+  noBtn.addEventListener("touchstart", moveNo);
+
+  yesBtn.addEventListener("click", function () {
+    bgMusic.currentTime = 0;
+    bgMusic.play();
+
+    noBtn.style.display = "none";
+
+    createHeartRain();
+    confettiBlast();
+    showMessages();
+  });
+
+  function createHeartRain() {
+    for (let i = 0; i < 60; i++) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "❤️";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = (20 + Math.random() * 30) + "px";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+  }
+
+  const messages = [
+    "Thinking of you… 😘",
+    "You make my world brighter 🌎✨",
+    "Life is beautiful with you 💖",
+    "You are my forever 💕",
+    "I love you endlessly, Harshu ❤️"
+  ];
+
+  function showMessages() {
+    messagesDiv.innerHTML = "";
+    let index = 0;
+
+    const interval = setInterval(() => {
+      if (index >= messages.length) {
+        clearInterval(interval);
+        return;
+      }
+
+      const p = document.createElement("p");
+      p.classList.add("message");
+      p.innerText = messages[index];
+      messagesDiv.appendChild(p);
+      index++;
+
+    }, 2000);
+  }
+
+  function confettiBlast() {
+    for (let i = 0; i < 120; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.backgroundColor = `hsl(${Math.random()*360}, 80%, 60%)`;
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 3000);
+    }
+  }
+
+</script>
+
+</body>
+</html>
